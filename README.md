@@ -1,6 +1,6 @@
 <h1 align="center">
   <br>
-    <img src="https://mycloudrevolution.com/?p=6381" alt="logo" width="200">
+    <img src="images/PowerCLI_Icon.png" alt="logo" width="200">
   <br>
   vscode-powercli
   <br>
