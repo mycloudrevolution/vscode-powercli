@@ -1,0 +1,66 @@
+{
+    "VMware vSphere vCenter Connection": {
+        "prefix": "vmw connect-viserver",
+        "body": [
+            "#region: vCenter Connection",
+			"\\$vCenterFQDN = '<Your vCenter FQDN>'",
+			"Write-Host 'Starting to process vCenter connection to \\$vCenterFQDN ...'",
+			"\\$OpenConnection = \\$global:DefaultVIServers | Where-Object { \\$_.Name -eq \\$vCenterFQDN }",
+			"if(\\$OpenConnection.IsConnected) {",
+			"\tWrite-Host 'vCenter is already connected ...'",
+			"\t\\$VIConnection = \\$OpenConnection",
+			"} else {",
+			"\tWrite-Host 'Connecting vCenter ...'",
+			"\t\\$VIConnection = Connect-VIServer -Server \\$vCenterFQDN",
+			"}",
+			"if (-not \\$VIConnection.IsConnected) {",
+			"\tThrow 'vCenter Connection Failed!'",
+			"}",
+			"#endregion"
+        ],
+        "description": "VMware vSphere vCenter Connection with handling of existing Connection."
+	},
+	"VMware ESXi Get-ESXCLI -V2": {
+        "prefix": "vmw get-esxcli -v2",
+        "body": [
+			"#region: Get-ESXCLI -V2",
+			"\\$VMhost = Get-VMHost -Name '<Your Host Name>'",
+			"\\$esxcli2 = Get-ESXCLI -VMHost \\$VMhost -V2",
+			"\\$CreateArgs = \\$esxcli2.<Your esxcli Namspace>.CreateArgs()",
+			"\\$CreateArgs.<Your Arg Name> = \\$YourArg",
+			"\\$Response = \\$esxcli2.<Your esxcli Namspace>.Invoke(\\$CreateArgs)",
+			"#endregion"
+        ],
+        "description": "Invoke VMware ESXi Host ESXCLI via Get-ESXCLI -V2 with Arguments."
+	},
+	"For each ESXi Host in Cluster": {
+        "prefix": "vmw foreach host in cluster",
+        "body": [
+			"#region: For each ESXi Host in Cluster",
+			"\\$Clustername = '<Your Clustername>'",
+			"if ((\\$myCluster = Get-Cluster -Name \\$Clustername).count -lt 1) {",
+			"\tthow 'No Cluster '\\$myCluster' found!'",
+			"}",
+			"foreach (\\$myVMhost in (\\$myCluster | Get-VMHost)) {",
+			"}",
+			"#endregion"
+        ],
+        "description": "For each loop for all ESXi Hosts in your Cluster."
+	},
+	"Get VM Metric Stats": {
+        "prefix": "vmw get vm metric stats",
+        "body": [
+			"#region: Get VM Metric Stats",
+			"\\$VMs = Get-VM",
+			"[int] \\$Minutes = 30",
+            "[int] \\$TimeRange = '-' + \\$Minutes",
+            "\\$VMMetrics = 'virtualdisk.numberwriteaveraged.average','virtualdisk.numberreadaveraged.average'",
+            "\\$Start = (Get-Date).AddMinutes(\\$TimeRange)",
+            "\\$Stats = Get-Stat -Realtime -Stat \\$VMMetrics -Entity \\$VMs -Start \\$Start",
+			"#endregion"
+        ],
+        "description": "Get VM Metric Stats of your VMs."
+	}
+	
+
+}
