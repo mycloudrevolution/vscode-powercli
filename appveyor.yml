@@ -2,6 +2,11 @@ environment:
   ELECTRON_RUN_AS_NODE: 1
   VSCODE_BUILD_VERBOSE: true
 
+branches:
+  only:
+  - master
+  - develop
+
 cache:
   - '%LOCALAPPDATA%\Yarn\cache'
 
