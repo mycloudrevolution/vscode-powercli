@@ -60,7 +60,21 @@
 		"#endregion"
         ],
         "description": "Get VM Metric Stats of your VMs."
-	}
-	
+	},
+	"Upload File to Datastore": {
+        "prefix": "vmw upload file",
+        "body": [
+		"#region: Upload File"
+		"\\$DatastoreName = <Your Datastore Name>",
+		"\\$LocalPath  = <Your Local Path to File>",
+		"\\$Datastore =  \\$VMhost | Get-Datastore -Name \\$DatastoreName",
+		"\\$DatastoreDriveName = 'HostStore_' + \\$VMhost.Name.Split('.')[0]",
+		"\\$Datastore | New-DatastoreDrive -Name \\$DatastoreDriveName | Out-Null",
+		"Copy-DatastoreItem -Item \\$LocalPath -Destination \\$(\\$DatastoreDriveName + ':\\\ ') -Force:\\$true -Confirm:\\$false",
+		"Remove-PSDrive -Name \\$DatastoreDriveName",
+		"#endregion"
+        ],
+        "description": "Upload File to Datastore."
+	}	
 
 }

@@ -26,3 +26,5 @@ The inital release of the VSCode PowerCLI Extension only containes Code Snippets
 #### For each ESXi Host in Cluster
 
 #### Get VM Metric Stats
+
+#### Upload File to Datastore
